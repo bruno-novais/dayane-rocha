@@ -68,7 +68,7 @@ function Courses({ profile, goBack }: { profile: Profile; goBack: () => void }) 
 export default function Page() {
   const [screen, setScreen] = useState<Screen>('home')
   const [profile, setProfile] = useState<Profile>('paciente')
-  useEffect(() => { const readHash = () => { const value = window.location.hash.replace('#', '').split('?')[0]; setScreen(value === 'categorias' || value === 'cursos' ? value : 'home') }; readHash(); window.addEventListener('hashchange', readHash); return () => window.removeEventListener('hashchange', readHash) }, [])
+  useEffect(() => { const readHash = () => { window.scrollTo({ top: 0, behavior: "instant" }); const value = window.location.hash.replace('#', '').split('?')[0]; setScreen(value === 'categorias' || value === 'cursos' ? value : 'home') }; readHash(); window.addEventListener('hashchange', readHash); return () => window.removeEventListener('hashchange', readHash) }, [])
   const chooseProfile = (nextProfile: Profile) => { setProfile(nextProfile); window.location.hash = '#categorias' }
   return <div className="min-h-screen bg-[#0b0b0b] text-white">{screen === 'home' && <Home choose={chooseProfile} />}{screen === 'categorias' && <Categories profile={profile} goBack={() => { window.location.hash = '#home' }} select={() => { window.location.hash = '#cursos' }} />}{screen === 'cursos' && <Courses profile={profile} goBack={() => { window.location.hash = '#categorias' }} />}</div>
 }
