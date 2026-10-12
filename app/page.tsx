@@ -54,7 +54,7 @@ function Logo() {
 
 function Header({ onBack, profile }: { onBack: () => void; profile: Profile }) {
   const colors = theme(profile)
-  return <header className="sticky top-4 z-20 mx-4 rounded-2xl border border-white/10 bg-[#161616]/70 px-4 py-3 shadow-lg shadow-black/20 backdrop-blur-md sm:mx-auto sm:max-w-6xl sm:px-6" style={{ '--accent': colors.accent } as CSSProperties}><div className="flex items-center justify-between gap-4"><Logo /><button onClick={onBack} className="group flex shrink-0 items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-[#d1d1d1] transition-all duration-300 hover:border-[var(--accent)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"><ArrowLeft size={15} className="transition-transform duration-300 group-hover:-translate-x-1" /> Voltar</button></div></header>
+  return <header className="sticky top-4 z-20 mx-4 w-[calc(100%-2rem)] rounded-2xl border border-white/10 bg-[#161616]/70 px-4 py-3 shadow-lg shadow-black/20 backdrop-blur-md sm:mx-auto sm:w-full sm:max-w-6xl sm:px-6" style={{ '--accent': colors.accent } as CSSProperties}><div className="flex items-center justify-between gap-4"><Logo /><button onClick={onBack} className="group flex shrink-0 items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-[#d1d1d1] transition-all duration-300 hover:border-[var(--accent)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"><ArrowLeft size={15} className="transition-transform duration-300 group-hover:-translate-x-1" /> Voltar</button></div></header>
 }
 
 function Home({ choose }: { choose: (profile: Profile) => void }) {
