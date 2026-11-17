@@ -1,48 +1,64 @@
-import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import { Analytics } from '@vercel/analytics/next'
+import { brandFont } from '@/lib/fonts'
+import { site } from '@/data/site'
+import { IntroProvider } from '@/components/site/intro-provider'
+import { MotionProvider } from '@/components/motion/motion-provider'
+import { SiteFooter } from '@/components/site/site-footer'
+import { SiteHeader } from '@/components/site/site-header'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  metadataBase: new URL(site.url),
+  title: {
+    default: `${site.nome} · ${site.titulo}`,
+    template: `%s · ${site.nome}`,
+  },
+  description: site.descricao,
+  alternates: { canonical: '/' },
+  generator: 'Next.js',
+  openGraph: {
+    title: `${site.nome} · ${site.titulo}`,
+    description: site.descricao,
+    siteName: site.nome,
+    locale: 'pt_BR',
+    type: 'website',
+  },
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
+    icon: '/icon.png',
     apple: '/apple-icon.png',
   },
+  manifest: '/manifest.webmanifest',
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'light dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
-  ],
+  colorScheme: 'dark',
+  themeColor: '#1E1E1E',
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+const introScript = `(function(){try{var p=window.location.pathname;var s=sessionStorage.getItem('dr-intro-visto');var r=window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(p==='/'&&!s&&!r){document.documentElement.dataset.intro='play'}else{sessionStorage.setItem('dr-intro-visto','1')}}catch(e){}})()`
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+    <html lang="pt-BR" className={brandFont.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: introScript }} />
+      </head>
+      <body>
+        <noscript>
+          <style>{`.reveal-text-unit,.reveal-block,.intro-overlay{opacity:1!important;filter:none!important;transform:none!important}.intro-overlay{display:none!important}`}</style>
+        </noscript>
+        <MotionProvider>
+          <IntroProvider>
+            <a className="skip-link" href="#conteudo">{site.ui.pularConteudo}</a>
+            <SiteHeader />
+            <main id="conteudo" className="site-main" tabIndex={-1}>
+              {children}
+            </main>
+            <SiteFooter />
+          </IntroProvider>
+        </MotionProvider>
+        <Analytics />
       </body>
     </html>
   )
