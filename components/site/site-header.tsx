@@ -37,7 +37,7 @@ export function SiteHeader() {
   return (
     <header
       ref={headerRef}
-      className={`site-header glass${scrollY > 24 ? ' is-condensed' : ''}${hidden && !menuOpen ? ' is-hidden' : ''}`}
+      className={`site-header glass rounded-[28px] overflow-hidden${scrollY > 24 ? ' is-condensed' : ''}${hidden && !menuOpen ? ' is-hidden' : ''}`}
       inert={hidden && !menuOpen ? true : undefined}
     >
       <div className="header-inner">

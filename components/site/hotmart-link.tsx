@@ -3,7 +3,7 @@
 import type { MouseEventHandler, ReactNode } from 'react'
 import { track } from '@vercel/analytics'
 import { ExternalLink } from 'lucide-react'
-import type { Curso } from '@/data/catalogo'
+import { isHotmartUrlValida, type Curso } from '@/data/catalogo'
 import { site } from '@/data/site'
 
 type HotmartLinkProps = {
@@ -14,6 +14,8 @@ type HotmartLinkProps = {
 }
 
 export function HotmartLink({ curso, className, children, mostrarIcone = false }: HotmartLinkProps) {
+  if (!isHotmartUrlValida(curso.hotmartUrl)) return <>{children}</>
+
   let href = curso.hotmartUrl
   try {
     const url = new URL(curso.hotmartUrl)

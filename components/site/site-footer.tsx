@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { site } from '@/data/site'
 import { RevealText } from '@/components/motion/reveal-text'
-import { AvisoSaude } from '@/components/site/aviso-saude'
 
 export function SiteFooter() {
   const year = new Date().getFullYear()
@@ -42,7 +41,6 @@ export function SiteFooter() {
             <p>© {year} {site.nome}. {site.ui.anoDireitos}</p>
             {site.crefito && <p>{site.crefito}</p>}
           </div>
-          <AvisoSaude />
         </div>
       </div>
     </footer>

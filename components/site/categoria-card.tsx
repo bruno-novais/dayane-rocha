@@ -1,14 +1,14 @@
 import Link from 'next/link'
-import { Activity, Brain, FileText, Hand, HeartHandshake, Search, Zap } from 'lucide-react'
+import { Activity, ArrowUpRight, Brain, FileText, Hand, HeartHandshake, Search, Zap } from 'lucide-react'
 import type { ComponentType } from 'react'
 import type { Categoria } from '@/data/catalogo'
 import { getCursos } from '@/data/catalogo'
 import { site } from '@/data/site'
 import { InfoCategoria } from '@/components/site/info-categoria'
 import { Reveal } from '@/components/motion/reveal'
-import { ArrowUpRight } from 'lucide-react'
+import { PhotoFrame } from '@/components/site/photo-frame'
 
-const icones: Record<string, ComponentType<{ size?: number; strokeWidth?: number; 'aria-hidden'?: boolean }>> = {
+const icones: Record<string, ComponentType<{ size?: number; strokeWidth?: number; className?: string; 'aria-hidden'?: boolean }>> = {
   brain: Brain,
   zap: Zap,
   hand: Hand,
@@ -28,21 +28,33 @@ export function CategoriaCard({ categoria, indice = 0 }: { categoria: Categoria;
 
   return (
     <Reveal atraso={indice * 0.08} className="category-reveal">
-      <article className="category-card glass">
-        <div className="category-card-top">
-          <span className="category-order">{categoria.ordem}</span>
-          <span className="category-icon" aria-hidden="true">
-            <Icone size={24} strokeWidth={1.75} />
-          </span>
-          <InfoCategoria categoria={categoria} />
+      <article className="category-card glass" data-trilha={categoria.publico}>
+        <div className="category-photo">
+          <PhotoFrame
+            imagem={categoria.imagem}
+            Icone={Icone}
+            className="category-photo-image"
+            sizes="(max-width: 639px) 360px, (max-width: 900px) 50vw, 610px"
+          />
+          <div className="category-photo-meta">
+            <span className="category-order glass">{categoria.ordem}</span>
+            <InfoCategoria categoria={categoria} />
+          </div>
         </div>
-        <Link className="category-title-link" href={`/${categoria.publico}/${categoria.slug}`}>
-          <h2>{categoria.titulo}</h2>
-          <span className="sr-only">{site.ui.acessarCategoria}</span>
-          <span className="category-arrow" aria-hidden="true"><ArrowUpRight size={19} strokeWidth={1.75} /></span>
-        </Link>
-        <p>{categoria.resumo}</p>
-        <span className="category-count">{quantidade}</span>
+        <span className="category-icon" aria-hidden="true">
+          <Icone size={24} strokeWidth={1.75} />
+        </span>
+        <div className="category-card-body">
+          <Link className="category-title-link" href={`/${categoria.publico}/${categoria.slug}`}>
+            <h2>{categoria.titulo}</h2>
+            <span className="sr-only">{site.ui.acessarCategoria}</span>
+          </Link>
+          <p>{categoria.resumo}</p>
+          <div className="category-footer">
+            <span className="category-count">{quantidade}</span>
+            <span className="category-arrow" aria-hidden="true"><ArrowUpRight size={19} strokeWidth={1.75} /></span>
+          </div>
+        </div>
       </article>
     </Reveal>
   )

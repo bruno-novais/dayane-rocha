@@ -43,10 +43,14 @@ export function IntroProvider({ children }: { children: React.ReactNode }) {
   }, [active, finish, leaving])
 
   useEffect(() => {
-    const shouldPlay = document.documentElement.dataset.intro === 'play'
-    reducedMotion.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    reducedMotion.current = reduced
+    const shouldPlay =
+      window.location.pathname === '/' &&
+      document.documentElement.dataset.intro === 'play' &&
+      !reduced
 
-    if (shouldPlay && !reducedMotion.current) {
+    if (shouldPlay) {
       try {
         sessionStorage.setItem('dr-intro-visto', '1')
       } catch {}
@@ -82,28 +86,34 @@ export function IntroProvider({ children }: { children: React.ReactNode }) {
       <div data-site-content inert={active || undefined}>
         {children}
       </div>
-      <div
-        className={`intro-overlay${leaving ? ' is-leaving' : ''}${skipping ? ' is-skipping' : ''}`}
-        role="dialog"
-        aria-modal={active ? true : undefined}
-        aria-label={site.ui.abertura}
-        aria-hidden={!active}
-      >
-        <span className="sr-only">{site.introducao.acessivel}</span>
-        <div className="intro-center" aria-hidden="true">
-          <Image className="intro-symbol" src="/brand/logo-simbolo.svg" alt="" width={1868} height={1740} priority unoptimized />
-          <h1 className="intro-name">
-            {Array.from(site.introducao.nome).map((letter, index) => (
-              <span
-                className={letter === ' ' ? 'intro-space' : undefined}
-                key={`${letter}-${index}`}
-                style={{ animationDelay: `${0.7 + index * 0.055}s`, ['--intro-index' as string]: index }}
-              >
-                {letter === ' ' ? '\u00a0' : letter}
-              </span>
-            ))}
-          </h1>
-          <p className="intro-tagline">
+      {active && (
+        <div
+          className={`intro-overlay${leaving ? ' is-leaving' : ''}${skipping ? ' is-skipping' : ''}`}
+          role="dialog"
+          aria-modal="true"
+          aria-label={site.ui.abertura}
+        >
+          <span className="sr-only">{site.introducao.acessivel}</span>
+          <div className="intro-center" aria-hidden="true">
+            <Image className="intro-symbol" src="/brand/logo-simbolo.svg" alt="" width={1868} height={1740} priority unoptimized />
+            <p className="intro-name">
+              {site.introducao.nome.split(' ').map((palavra, palavraIndex) => (
+                <span className="intro-name-line" key={palavra}>
+                  {Array.from(palavra).map((letter, letterIndex) => {
+                    const index = palavraIndex * 7 + letterIndex
+                    return (
+                      <span
+                        key={`${letter}-${letterIndex}`}
+                        style={{ animationDelay: `${0.7 + index * 0.055}s`, ['--intro-index' as string]: index }}
+                      >
+                        {letter}
+                      </span>
+                    )
+                  })}
+                </span>
+              ))}
+            </p>
+            <p className="intro-tagline">
             {site.introducao.frase.map((segmento, segmentIndex) =>
               segmento.texto.split(/\s+/).filter(Boolean).map((word, wordIndex) => (
                 <span
@@ -115,13 +125,14 @@ export function IntroProvider({ children }: { children: React.ReactNode }) {
                 </span>
               )),
             )}
-          </p>
+            </p>
+          </div>
+          <button ref={skipRef} className="intro-skip glass" type="button" onClick={skip}>
+            {site.introducao.pular}
+          </button>
+          <span className="intro-progress" aria-hidden="true" />
         </div>
-        <button ref={skipRef} className="intro-skip glass" type="button" onClick={skip} tabIndex={active ? 0 : -1}>
-          {site.introducao.pular}
-        </button>
-        <span className="intro-progress" aria-hidden="true" />
-      </div>
+      )}
     </IntroContext.Provider>
   )
 }

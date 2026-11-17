@@ -10,6 +10,7 @@ export type Publico = {
   titulo: string
   chamada: string
   descricao: string
+  imagem: { src: string; alt: string }
   pilares: string[]
 }
 
@@ -22,6 +23,7 @@ export type Categoria = {
   explicacao: string
   exemplos: string[]
   icone: string
+  imagem: { src: string; alt: string }
 }
 
 export type Curso = {
@@ -47,6 +49,10 @@ export const publicos: Publico[] = [
     chamada: 'O que você quer aprender?',
     descricao:
       'Segurança clínica para quem está começando e atualização para quem já atua, com foco em neurofuncional.',
+    imagem: {
+      src: '/images/trilhas/fisioterapeutas.jpg',
+      alt: 'Fisioterapeuta preparando uma avaliação funcional em ambiente clínico.',
+    },
     pilares: ['Raciocínio clínico', 'Avaliação', 'Recursos terapêuticos', 'Materiais de apoio'],
   },
   {
@@ -57,6 +63,10 @@ export const publicos: Publico[] = [
     chamada: 'O que você está buscando?',
     descricao:
       'Entenda sua dor e aprenda a se movimentar com segurança, em casa, com orientação de uma fisioterapeuta.',
+    imagem: {
+      src: '/images/trilhas/pacientes.jpg',
+      alt: 'Pessoa praticando um movimento de mobilidade em casa com tranquilidade.',
+    },
     pilares: ['Entender a dor', 'Movimento seguro', 'Autocuidado', 'Cuidado de quem cuida'],
   },
 ]
@@ -72,6 +82,7 @@ export const categorias: Categoria[] = [
       'Aulas para construir a base do raciocínio clínico: como o corpo se move, o que muda nas condições neurológicas e musculoesqueléticas e como isso orienta a conduta.',
     exemplos: ['Anatomia funcional', 'Biomecânica', 'Condições neurológicas'],
     icone: 'brain',
+    imagem: { src: '/images/categorias/teorica-clinica.jpg', alt: 'Estudo de anatomia funcional em material de fisioterapia.' },
   },
   {
     slug: 'equipamentos-recursos',
@@ -83,6 +94,7 @@ export const categorias: Categoria[] = [
       'Passo a passo de como configurar cada aparelho e, principalmente, por que escolher cada parâmetro, com raciocínio clínico por trás.',
     exemplos: ['TENS', 'Ultrassom terapêutico', 'Laser'],
     icone: 'zap',
+    imagem: { src: '/images/categorias/equipamentos-recursos.jpg', alt: 'Equipamento de fisioterapia preparado para uma sessão clínica.' },
   },
   {
     slug: 'aulas-praticas',
@@ -94,6 +106,7 @@ export const categorias: Categoria[] = [
       'Vídeos mostrando a execução real: posicionamento, comandos ao paciente e interpretação do que observar.',
     exemplos: ['Testes funcionais', 'Posicionamento', 'Técnicas de avaliação'],
     icone: 'hand',
+    imagem: { src: '/images/categorias/aulas-praticas.jpg', alt: 'Demonstração de movimento durante uma avaliação fisioterapêutica.' },
   },
   {
     slug: 'materiais-profissionais',
@@ -105,6 +118,7 @@ export const categorias: Categoria[] = [
       'Documentos prontos e editáveis: fichas de anamnese e avaliação, checklists e modelos de evolução e relatório para enviar a médicos e empresas.',
     exemplos: ['Fichas de anamnese', 'Checklists', 'Modelos de relatório'],
     icone: 'file-text',
+    imagem: { src: '/images/categorias/materiais-profissionais.jpg', alt: 'Fichas e materiais profissionais organizados para consulta.' },
   },
   {
     slug: 'entenda-sua-dor',
@@ -116,6 +130,7 @@ export const categorias: Categoria[] = [
       'Anatomia sem complicação: como funciona a região, por que a dor aparece e quando é hora de interromper e procurar avaliação presencial.',
     exemplos: ['Dor lombar', 'Fascite plantar', 'Tendinite'],
     icone: 'search',
+    imagem: { src: '/images/categorias/entenda-sua-dor.jpg', alt: 'Pessoa consultando uma ilustração educativa sobre dor e movimento.' },
   },
   {
     slug: 'movimento-e-mobilidade',
@@ -127,6 +142,7 @@ export const categorias: Categoria[] = [
       'Vídeos e guias ilustrados com protocolos para dor lombar, fascite plantar, tendinite e rotina de home office, com prevenção no dia a dia.',
     exemplos: ['Dor lombar', 'Fascite plantar', 'Tendinite', 'Home office'],
     icone: 'activity',
+    imagem: { src: '/images/categorias/movimento-e-mobilidade.jpg', alt: 'Pessoa realizando um exercício de mobilidade com orientação.' },
   },
   {
     slug: 'cuidando-de-quem-voce-ama',
@@ -138,6 +154,7 @@ export const categorias: Categoria[] = [
       'Orientações práticas para cuidadores familiares: exercícios de mobilidade, exercícios respiratórios e cuidados com você mesmo durante a rotina.',
     exemplos: ['Mobilidade para idosos', 'Respiração', 'Autocuidado de cuidadores'],
     icone: 'heart-handshake',
+    imagem: { src: '/images/categorias/cuidando-de-quem-voce-ama.jpg', alt: 'Pessoa cuidadora acompanhando um exercício de mobilidade em casa.' },
   },
 ]
 
@@ -315,6 +332,26 @@ export const cursos: Curso[] = [
   },
 ]
 
+export function isHotmartUrlValida(url: string): boolean {
+  if (!url.trim() || url.toUpperCase().includes('SUBSTITUIR')) return false
+
+  try {
+    const parsed = new URL(url)
+    return parsed.protocol === 'https:' && parsed.hostname === 'pay.hotmart.com'
+  } catch {
+    return false
+  }
+}
+
+const cursosComLinkPendente = cursos.filter((curso) => !isHotmartUrlValida(curso.hotmartUrl))
+
+if (process.env.NODE_ENV === 'development' && cursosComLinkPendente.length > 0) {
+  console.warn(
+    '[dayane-rocha] Cursos com link Hotmart pendente serão exibidos como “Em breve”: ',
+    cursosComLinkPendente.map((curso) => curso.titulo),
+  )
+}
+
 export function getPublico(slug: string): Publico | undefined {
   return publicos.find((publico) => publico.slug === slug)
 }
@@ -328,5 +365,10 @@ export function getCategoria(publico: string, slug: string): Categoria | undefin
 }
 
 export function getCursos(publico: string, categoria: string): Curso[] {
-  return cursos.filter((curso) => curso.publico === publico && curso.categoria === categoria)
+  return cursos
+    .filter((curso) => curso.publico === publico && curso.categoria === categoria)
+    .map((curso) => ({
+      ...curso,
+      status: curso.status === 'ativo' && !isHotmartUrlValida(curso.hotmartUrl) ? 'em-breve' : curso.status,
+    }))
 }

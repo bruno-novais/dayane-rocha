@@ -3,7 +3,7 @@ export const site = {
   titulo: 'Fisioterapia neurofuncional · Cursos online',
   descricao:
     'Cursos de fisioterapia neurofuncional para profissionais, pacientes e cuidadores, com orientação clara e acolhedora.',
-  url: 'https://dayanerocha.com.br',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://dayane-rocha.vercel.app',
   instagram: '',
   whatsapp: '',
   crefito: '',
@@ -23,7 +23,7 @@ export const site = {
     { rotulo: 'Sobre', href: '/sobre' },
   ],
   inicio: {
-    eyebrow: 'Fisioterapia neurofuncional · Cursos online',
+    eyebrow: 'Cursos online de fisioterapia',
     titulo: [
       { texto: 'Quem é ' },
       { texto: 'você?', classe: 'text-primary' },
@@ -112,6 +112,10 @@ export const site = {
       avancado: 'Avançado',
     },
     escolhaTrilha: 'Escolha sua trilha',
+    rotuloProfissional: 'Profissional',
+    rotuloEmCasa: 'Em casa',
+    verCategorias: 'Ver categorias',
+    conteudoEducativoCurto: 'Conteúdo educativo. Não substitui avaliação presencial.',
     categoriasDeAprendizado: 'Categorias de aprendizado',
     listaDeCursos: 'Cursos desta categoria',
     altSelo: 'Selo salmão da marca Dayane Rocha com o símbolo em branco',

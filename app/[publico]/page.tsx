@@ -6,7 +6,6 @@ import { QUEIXAS, site } from '@/data/site'
 import { CategoriaCard } from '@/components/site/categoria-card'
 import { Breadcrumb } from '@/components/site/breadcrumb'
 import { HealthSection } from '@/components/site/health-section'
-import { SimboloFundo } from '@/components/motion/simbolo-fundo'
 import { RevealText } from '@/components/motion/reveal-text'
 import { Reveal } from '@/components/motion/reveal'
 
@@ -25,7 +24,12 @@ export async function generateMetadata({ params }: { params: Promise<{ publico: 
     title: publico.titulo,
     description: publico.descricao,
     alternates: { canonical: `/${publico.slug}` },
-    openGraph: { title: publico.titulo, description: publico.descricao },
+    openGraph: {
+      title: publico.titulo,
+      description: publico.descricao,
+      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: site.introducao.acessivel }],
+    },
+    twitter: { card: 'summary_large_image', title: publico.titulo, description: publico.descricao, images: ['/opengraph-image'] },
   }
 }
 
@@ -46,10 +50,10 @@ export default async function PublicoPage({ params }: { params: Promise<{ public
   const lista = getCategorias(publico.slug)
 
   return (
-    <div className="audience-page">
+    <div className="audience-page" data-trilha={publico.slug}>
       <section className="page-heading container-site">
-        <SimboloFundo />
         <div className="page-heading-inner">
+          <span className="page-audience-label">{publico.slug === 'fisioterapeutas' ? site.ui.rotuloProfissional : site.ui.rotuloEmCasa}</span>
           <Breadcrumb items={[{ label: publico.titulo }]} />
           <span className="eyebrow glass">{site.ui.trilha} {publico.trilha}</span>
           <RevealText as="h1" segmentos={realcarUltimaPalavra(publico.chamada)} modo="letters" className="display-title" />
