@@ -26,8 +26,7 @@ export const site = {
     eyebrow: 'Fisioterapia neurofuncional · Cursos online',
     titulo: [
       { texto: 'Quem é ' },
-      { texto: 'você', classe: 'text-primary' },
-      { texto: '?' },
+      { texto: 'você?', classe: 'text-primary' },
     ],
     subtitulo:
       'Escolha sua trilha e encontre cursos feitos por uma fisioterapeuta especializada em neuro.',

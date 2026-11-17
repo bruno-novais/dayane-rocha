@@ -433,7 +433,7 @@ html[data-intro='play'] .intro-overlay {
 
 .intro-symbol {
   width: 128px;
-  height: 120px;
+  height: auto;
   object-fit: contain;
   opacity: 0;
   animation: intro-symbol-in 800ms var(--ease-out-expo) 200ms forwards;
@@ -1864,7 +1864,7 @@ html[data-intro='play'] .intro-overlay {
 
   .intro-symbol {
     width: 96px;
-    height: 90px;
+    height: auto;
   }
 
   .intro-center {

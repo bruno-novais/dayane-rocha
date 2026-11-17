@@ -91,7 +91,7 @@ export function IntroProvider({ children }: { children: React.ReactNode }) {
       >
         <span className="sr-only">{site.introducao.acessivel}</span>
         <div className="intro-center" aria-hidden="true">
-          <Image className="intro-symbol" src="/brand/logo-simbolo.svg" alt="" width={128} height={120} priority unoptimized />
+          <Image className="intro-symbol" src="/brand/logo-simbolo.svg" alt="" width={1868} height={1740} priority unoptimized />
           <h1 className="intro-name">
             {Array.from(site.introducao.nome).map((letter, index) => (
               <span
