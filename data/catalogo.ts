@@ -1,7 +1,13 @@
+import type { StaticImageData } from 'next/image'
+import fisioterapeutasFoto from '@/public/images/trilhas/fisioterapeutas.jpg'
+import pacientesFoto from '@/public/images/trilhas/pacientes.jpg'
+import { MODO_DEMO } from '@/data/site'
+
 export type PublicoSlug = 'fisioterapeutas' | 'pacientes'
 export type Formato = 'video' | 'documento' | 'kit'
 export type QueixaSlug = 'dor-lombar' | 'fascite-plantar' | 'tendinite' | 'home-office'
 export type Nivel = 'iniciante' | 'intermediario' | 'avancado'
+export type ImagemTrilha = { src: StaticImageData; alt: string; posicao: string; zoom?: number }
 
 export type Publico = {
   slug: PublicoSlug
@@ -10,7 +16,7 @@ export type Publico = {
   titulo: string
   chamada: string
   descricao: string
-  imagem: { src: string; alt: string }
+  imagem: ImagemTrilha
   pilares: string[]
 }
 
@@ -23,7 +29,7 @@ export type Categoria = {
   explicacao: string
   exemplos: string[]
   icone: string
-  imagem: { src: string; alt: string }
+  imagem: ImagemTrilha
 }
 
 export type Curso = {
@@ -50,8 +56,10 @@ export const publicos: Publico[] = [
     descricao:
       'Segurança clínica para quem está começando e atualização para quem já atua, com foco em neurofuncional.',
     imagem: {
-      src: '/images/trilhas/fisioterapeutas.jpg',
-      alt: 'Fisioterapeuta preparando uma avaliação funcional em ambiente clínico.',
+      src: fisioterapeutasFoto,
+      alt: 'Fisioterapeuta orienta uma paciente durante uma avaliação funcional na clínica.',
+      posicao: '50% 38%',
+      zoom: 1.04,
     },
     pilares: ['Raciocínio clínico', 'Avaliação', 'Recursos terapêuticos', 'Materiais de apoio'],
   },
@@ -64,8 +72,10 @@ export const publicos: Publico[] = [
     descricao:
       'Entenda sua dor e aprenda a se movimentar com segurança, em casa, com orientação de uma fisioterapeuta.',
     imagem: {
-      src: '/images/trilhas/pacientes.jpg',
-      alt: 'Pessoa praticando um movimento de mobilidade em casa com tranquilidade.',
+      src: pacientesFoto,
+      alt: 'Paciente pratica um alongamento sentada em casa, acompanhada por uma fisioterapeuta.',
+      posicao: '50% 44%',
+      zoom: 1.04,
     },
     pilares: ['Entender a dor', 'Movimento seguro', 'Autocuidado', 'Cuidado de quem cuida'],
   },
@@ -82,7 +92,7 @@ export const categorias: Categoria[] = [
       'Aulas para construir a base do raciocínio clínico: como o corpo se move, o que muda nas condições neurológicas e musculoesqueléticas e como isso orienta a conduta.',
     exemplos: ['Anatomia funcional', 'Biomecânica', 'Condições neurológicas'],
     icone: 'brain',
-    imagem: { src: '/images/categorias/teorica-clinica.jpg', alt: 'Estudo de anatomia funcional em material de fisioterapia.' },
+    imagem: { src: fisioterapeutasFoto, alt: 'Fisioterapeuta acompanha uma avaliação clínica e observa o movimento da paciente.', posicao: '48% 38%', zoom: 1.35 },
   },
   {
     slug: 'equipamentos-recursos',
@@ -94,7 +104,7 @@ export const categorias: Categoria[] = [
       'Passo a passo de como configurar cada aparelho e, principalmente, por que escolher cada parâmetro, com raciocínio clínico por trás.',
     exemplos: ['TENS', 'Ultrassom terapêutico', 'Laser'],
     icone: 'zap',
-    imagem: { src: '/images/categorias/equipamentos-recursos.jpg', alt: 'Equipamento de fisioterapia preparado para uma sessão clínica.' },
+    imagem: { src: fisioterapeutasFoto, alt: 'Fisioterapeuta em atendimento clínico, conversando com a paciente durante a avaliação.', posicao: '47% 46%', zoom: 1.5 },
   },
   {
     slug: 'aulas-praticas',
@@ -106,7 +116,7 @@ export const categorias: Categoria[] = [
       'Vídeos mostrando a execução real: posicionamento, comandos ao paciente e interpretação do que observar.',
     exemplos: ['Testes funcionais', 'Posicionamento', 'Técnicas de avaliação'],
     icone: 'hand',
-    imagem: { src: '/images/categorias/aulas-praticas.jpg', alt: 'Demonstração de movimento durante uma avaliação fisioterapêutica.' },
+    imagem: { src: fisioterapeutasFoto, alt: 'Fisioterapeuta demonstra um movimento enquanto orienta a paciente.', posicao: '53% 41%', zoom: 1.4 },
   },
   {
     slug: 'materiais-profissionais',
@@ -118,7 +128,7 @@ export const categorias: Categoria[] = [
       'Documentos prontos e editáveis: fichas de anamnese e avaliação, checklists e modelos de evolução e relatório para enviar a médicos e empresas.',
     exemplos: ['Fichas de anamnese', 'Checklists', 'Modelos de relatório'],
     icone: 'file-text',
-    imagem: { src: '/images/categorias/materiais-profissionais.jpg', alt: 'Fichas e materiais profissionais organizados para consulta.' },
+    imagem: { src: fisioterapeutasFoto, alt: 'Profissional de fisioterapia conduz uma avaliação funcional em consultório.', posicao: '48% 42%', zoom: 1.55 },
   },
   {
     slug: 'entenda-sua-dor',
@@ -130,7 +140,7 @@ export const categorias: Categoria[] = [
       'Anatomia sem complicação: como funciona a região, por que a dor aparece e quando é hora de interromper e procurar avaliação presencial.',
     exemplos: ['Dor lombar', 'Fascite plantar', 'Tendinite'],
     icone: 'search',
-    imagem: { src: '/images/categorias/entenda-sua-dor.jpg', alt: 'Pessoa consultando uma ilustração educativa sobre dor e movimento.' },
+    imagem: { src: pacientesFoto, alt: 'Fisioterapeuta conversa com paciente sobre movimento e cuidados em casa.', posicao: '50% 45%', zoom: 1.35 },
   },
   {
     slug: 'movimento-e-mobilidade',
@@ -142,7 +152,7 @@ export const categorias: Categoria[] = [
       'Vídeos e guias ilustrados com protocolos para dor lombar, fascite plantar, tendinite e rotina de home office, com prevenção no dia a dia.',
     exemplos: ['Dor lombar', 'Fascite plantar', 'Tendinite', 'Home office'],
     icone: 'activity',
-    imagem: { src: '/images/categorias/movimento-e-mobilidade.jpg', alt: 'Pessoa realizando um exercício de mobilidade com orientação.' },
+    imagem: { src: pacientesFoto, alt: 'Paciente realiza um alongamento sentado em casa, com orientação da fisioterapeuta.', posicao: '56% 46%', zoom: 1.5 },
   },
   {
     slug: 'cuidando-de-quem-voce-ama',
@@ -154,7 +164,7 @@ export const categorias: Categoria[] = [
       'Orientações práticas para cuidadores familiares: exercícios de mobilidade, exercícios respiratórios e cuidados com você mesmo durante a rotina.',
     exemplos: ['Mobilidade para idosos', 'Respiração', 'Autocuidado de cuidadores'],
     icone: 'heart-handshake',
-    imagem: { src: '/images/categorias/cuidando-de-quem-voce-ama.jpg', alt: 'Pessoa cuidadora acompanhando um exercício de mobilidade em casa.' },
+    imagem: { src: pacientesFoto, alt: 'Fisioterapeuta acompanha uma paciente sentada durante um exercício de mobilidade em casa.', posicao: '45% 40%', zoom: 1.3 }
   },
 ]
 
@@ -185,6 +195,17 @@ export const cursos: Curso[] = [
     status: 'em-breve',
   },
   {
+    slug: 'avaliacao-funcional-neuro',
+    publico: 'fisioterapeutas',
+    categoria: 'teorica-clinica',
+    titulo: 'Avaliação funcional em neuro: do achado à conduta',
+    descricao: 'Relacione os achados da avaliação a objetivos funcionais e decisões terapêuticas.',
+    formatos: ['video', 'documento'],
+    nivel: 'avancado',
+    hotmartUrl: urlHotmart,
+    status: 'em-breve',
+  },
+  {
     slug: 'tens-na-pratica',
     publico: 'fisioterapeutas',
     categoria: 'equipamentos-recursos',
@@ -203,6 +224,17 @@ export const cursos: Curso[] = [
     descricao: 'Uma demonstração objetiva de configuração, parâmetros e aplicação.',
     formatos: ['video'],
     nivel: 'iniciante',
+    hotmartUrl: urlHotmart,
+    status: 'em-breve',
+  },
+  {
+    slug: 'laser-terapeutico-na-pratica',
+    publico: 'fisioterapeutas',
+    categoria: 'equipamentos-recursos',
+    titulo: 'Laser terapêutico: parâmetros e aplicação',
+    descricao: 'Revise indicações, escolha de parâmetros e cuidados durante a aplicação.',
+    formatos: ['video', 'kit'],
+    nivel: 'intermediario',
     hotmartUrl: urlHotmart,
     status: 'em-breve',
   },
@@ -229,6 +261,17 @@ export const cursos: Curso[] = [
     status: 'em-breve',
   },
   {
+    slug: 'equilibrio-avaliacao-funcional',
+    publico: 'fisioterapeutas',
+    categoria: 'aulas-praticas',
+    titulo: 'Equilíbrio: demonstração de avaliação funcional',
+    descricao: 'Acompanhe a preparação e a observação de testes de equilíbrio com segurança.',
+    formatos: ['video', 'documento'],
+    nivel: 'avancado',
+    hotmartUrl: urlHotmart,
+    status: 'em-breve',
+  },
+  {
     slug: 'kit-fichas-anamnese-avaliacao',
     publico: 'fisioterapeutas',
     categoria: 'materiais-profissionais',
@@ -251,6 +294,17 @@ export const cursos: Curso[] = [
     status: 'em-breve',
   },
   {
+    slug: 'checklist-devolutiva-paciente',
+    publico: 'fisioterapeutas',
+    categoria: 'materiais-profissionais',
+    titulo: 'Checklist de devolutiva e plano de cuidado',
+    descricao: 'Organize orientações, objetivos e próximos passos para compartilhar com o paciente.',
+    formatos: ['documento', 'kit'],
+    nivel: 'intermediario',
+    hotmartUrl: urlHotmart,
+    status: 'em-breve',
+  },
+  {
     slug: 'entenda-dor-lombar',
     publico: 'pacientes',
     categoria: 'entenda-sua-dor',
@@ -269,6 +323,18 @@ export const cursos: Curso[] = [
     descricao: 'Conheça a estrutura do pé e os fatores que podem estar relacionados à dor.',
     formatos: ['video'],
     nivel: 'iniciante',
+    hotmartUrl: urlHotmart,
+    status: 'em-breve',
+  },
+  {
+    slug: 'entenda-tendinite-e-movimento',
+    publico: 'pacientes',
+    categoria: 'entenda-sua-dor',
+    titulo: 'Tendinite: entenda a dor e o movimento',
+    descricao: 'Uma introdução clara aos sintomas, aos movimentos e aos cuidados do dia a dia.',
+    formatos: ['video', 'documento'],
+    nivel: 'intermediario',
+    queixa: 'tendinite',
     hotmartUrl: urlHotmart,
     status: 'em-breve',
   },
@@ -309,6 +375,18 @@ export const cursos: Curso[] = [
     status: 'em-breve',
   },
   {
+    slug: 'mobilidade-tendinite-em-casa',
+    publico: 'pacientes',
+    categoria: 'movimento-e-mobilidade',
+    titulo: 'Tendinite: movimentos para o dia a dia',
+    descricao: 'Explore uma rotina leve de mobilidade, respeitando seus limites e sinais do corpo.',
+    formatos: ['video', 'kit'],
+    nivel: 'intermediario',
+    queixa: 'tendinite',
+    hotmartUrl: urlHotmart,
+    status: 'em-breve',
+  },
+  {
     slug: 'mobilidade-para-idosos-em-casa',
     publico: 'pacientes',
     categoria: 'cuidando-de-quem-voce-ama',
@@ -330,6 +408,17 @@ export const cursos: Curso[] = [
     hotmartUrl: urlHotmart,
     status: 'em-breve',
   },
+  {
+    slug: 'respiracao-para-quem-cuida',
+    publico: 'pacientes',
+    categoria: 'cuidando-de-quem-voce-ama',
+    titulo: 'Respiração e pausas para quem cuida',
+    descricao: 'Práticas breves de respiração e movimento que cabem na rotina de cuidado.',
+    formatos: ['video', 'documento'],
+    nivel: 'iniciante',
+    hotmartUrl: urlHotmart,
+    status: 'em-breve',
+  },
 ]
 
 export function isHotmartUrlValida(url: string): boolean {
@@ -343,7 +432,7 @@ export function isHotmartUrlValida(url: string): boolean {
   }
 }
 
-const cursosComLinkPendente = cursos.filter((curso) => !isHotmartUrlValida(curso.hotmartUrl))
+const cursosComLinkPendente = MODO_DEMO ? [] : cursos.filter((curso) => !isHotmartUrlValida(curso.hotmartUrl))
 
 if (process.env.NODE_ENV === 'development' && cursosComLinkPendente.length > 0) {
   console.warn(
@@ -369,6 +458,10 @@ export function getCursos(publico: string, categoria: string): Curso[] {
     .filter((curso) => curso.publico === publico && curso.categoria === categoria)
     .map((curso) => ({
       ...curso,
-      status: curso.status === 'ativo' && !isHotmartUrlValida(curso.hotmartUrl) ? 'em-breve' : curso.status,
+      status: (MODO_DEMO
+        ? 'ativo'
+        : curso.status === 'ativo' && !isHotmartUrlValida(curso.hotmartUrl)
+          ? 'em-breve'
+          : curso.status) as Curso['status'],
     }))
 }

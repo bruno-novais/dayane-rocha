@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { categorias, cursos, getCategoria, getCursos, getPublico } from '@/data/catalogo'
+import { categorias, cursos, getCategoria, getCategorias, getCursos, getPublico } from '@/data/catalogo'
 import { site } from '@/data/site'
 import { Breadcrumb } from '@/components/site/breadcrumb'
 import { CursosGrid } from '@/components/site/cursos-grid'
@@ -47,6 +48,7 @@ export default async function CursosPage({ params }: { params: Promise<{ publico
 
   const lista = getCursos(publicoSlug, categoriaSlug)
   if (!lista.length) notFound()
+  const outrasCategorias = getCategorias(publico.slug).filter((item) => item.slug !== categoria.slug)
 
   return (
     <div className="courses-page" data-trilha={publico.slug}>
@@ -78,6 +80,17 @@ export default async function CursosPage({ params }: { params: Promise<{ publico
           categoria={categoria.slug}
         />
         {publico.slug === 'pacientes' && <AvisoSaude completo />}
+      </section>
+
+      <section className="other-categories container-site" aria-labelledby="other-categories-title">
+        <h2 id="other-categories-title">Outras categorias</h2>
+        <nav className="other-category-links" aria-label="Outras categorias deste público">
+          {outrasCategorias.map((item) => (
+            <Link className="other-category-link glass" href={`/${publico.slug}/${item.slug}`} key={item.slug}>
+              {item.titulo}
+            </Link>
+          ))}
+        </nav>
       </section>
     </div>
   )

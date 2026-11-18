@@ -1,3 +1,6 @@
+/** Mantém os cursos fictícios visíveis sem abrir checkouts durante a demonstração. */
+export const MODO_DEMO = true
+
 export const site = {
   nome: 'Dayane Rocha',
   titulo: 'Fisioterapia neurofuncional · Cursos online',
@@ -74,6 +77,8 @@ export const site = {
     inicio: 'Início',
     maisInformacoes: 'Mais informações sobre',
     exemplos: 'Exemplos',
+    exemplo: 'Exemplo',
+    linkDemonstracao: 'link de demonstração, sem navegação',
     cursoSingular: 'curso',
     cursoPlural: 'cursos',
     cursoDisponivel: 'disponível agora',

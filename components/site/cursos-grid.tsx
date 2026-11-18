@@ -43,8 +43,10 @@ function FilterLink({ href, label, active, group }: { href: string; label: strin
 function CursosGridContent({ cursos, mostrarFiltros, publico, categoria }: CursosGridProps) {
   const searchParams = useSearchParams()
   const reducedMotion = useReducedMotion()
-  const selectedQueixa = searchParams.get('queixa') as QueixaSlug | null
-  const selectedFormato = searchParams.get('formato') as Formato | null
+  const rawQueixa = searchParams.get('queixa')
+  const rawFormato = searchParams.get('formato')
+  const selectedQueixa = QUEIXAS.find((queixa) => queixa.slug === rawQueixa)?.slug ?? null
+  const selectedFormato = formats.find((formato) => formato === rawFormato) ?? null
   const filtered = cursos.filter((curso) => {
     const matchesQueixa = !selectedQueixa || curso.queixa === selectedQueixa
     const matchesFormato = !selectedFormato || curso.formatos.includes(selectedFormato)
@@ -64,30 +66,34 @@ function CursosGridContent({ cursos, mostrarFiltros, publico, categoria }: Curso
       {mostrarFiltros && (
         <div className="filters-sticky glass" role="group" aria-label={site.ui.filtros}>
           <div className="filters-row">
-            <span className="filter-caption">{site.ui.filtroPorQueixa}</span>
-            <FilterLink href={filterHref('queixa', null)} label={site.ui.todos} active={!selectedQueixa} group="queixa" />
-            {QUEIXAS.map((queixa) => (
-              <FilterLink
-                key={queixa.slug}
-                href={filterHref('queixa', queixa.slug)}
-                label={queixa.rotulo}
-                active={selectedQueixa === queixa.slug}
-                group="queixa"
-              />
-            ))}
+            <span id="filter-caption-queixa" className="filter-caption">{site.ui.filtroPorQueixa}</span>
+            <div className="filter-chip-list" role="group" aria-labelledby="filter-caption-queixa">
+              <FilterLink href={filterHref('queixa', null)} label={site.ui.todos} active={!selectedQueixa} group="queixa" />
+              {QUEIXAS.map((queixa) => (
+                <FilterLink
+                  key={queixa.slug}
+                  href={filterHref('queixa', queixa.slug)}
+                  label={queixa.rotulo}
+                  active={selectedQueixa === queixa.slug}
+                  group="queixa"
+                />
+              ))}
+            </div>
           </div>
           <div className="filters-row">
-            <span className="filter-caption">{site.ui.filtroPorFormato}</span>
-            <FilterLink href={filterHref('formato', null)} label={site.ui.todos} active={!selectedFormato} group="formato" />
-            {formats.map((formato) => (
-              <FilterLink
-                key={formato}
-                href={filterHref('formato', formato)}
-                label={formatLabels[formato]}
-                active={selectedFormato === formato}
-                group="formato"
-              />
-            ))}
+            <span id="filter-caption-formato" className="filter-caption">{site.ui.filtroPorFormato}</span>
+            <div className="filter-chip-list" role="group" aria-labelledby="filter-caption-formato">
+              <FilterLink href={filterHref('formato', null)} label={site.ui.todos} active={!selectedFormato} group="formato" />
+              {formats.map((formato) => (
+                <FilterLink
+                  key={formato}
+                  href={filterHref('formato', formato)}
+                  label={formatLabels[formato]}
+                  active={selectedFormato === formato}
+                  group="formato"
+                />
+              ))}
+            </div>
           </div>
         </div>
       )}

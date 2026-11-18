@@ -1,8 +1,7 @@
-import Image from 'next/image'
 import { FileText, Package, Video } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import type { Curso, Formato } from '@/data/catalogo'
-import { site } from '@/data/site'
+import { MODO_DEMO, site } from '@/data/site'
 import { HotmartLink } from '@/components/site/hotmart-link'
 
 const formatos: Record<Formato, string> = {
@@ -17,16 +16,9 @@ export function CursoCard({ curso }: { curso: Curso }) {
   const disponivel = curso.status === 'ativo'
 
   return (
-    <article className={`course-card${disponivel ? '' : ' is-soon'}`} aria-disabled={disponivel ? undefined : true}>
-      <div className="course-cover">
-        {curso.capa ? (
-          <Image src={curso.capa} alt="" width={640} height={480} className="course-cover-image" />
-        ) : (
-          <>
-            <Image src="/brand/logo-simbolo.svg" alt="" width={420} height={392} className="course-cover-logo" unoptimized />
-            <span className="course-cover-icon" aria-hidden="true"><FormatoIcone /></span>
-          </>
-        )}
+    <article className={`course-card${disponivel ? '' : ' is-soon'}`}>
+      <div className="course-cover" aria-hidden="true">
+        <span className="course-cover-icon"><FormatoIcone size={56} strokeWidth={1.35} /></span>
         {!disponivel && <Badge variant="outline" className="course-status">{site.ui.emBreve}</Badge>}
       </div>
       <div className="course-content">
@@ -35,6 +27,7 @@ export function CursoCard({ curso }: { curso: Curso }) {
             <span className="course-tag" key={formato}>{formatos[formato]}</span>
           ))}
           {curso.nivel && <span className="course-tag">{site.ui.niveis[curso.nivel]}</span>}
+          {MODO_DEMO && <span className="course-tag course-example-tag">{site.ui.exemplo}</span>}
         </div>
         <h2>
           {disponivel ? (
