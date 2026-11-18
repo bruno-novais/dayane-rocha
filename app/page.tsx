@@ -49,7 +49,7 @@ export default function HomePage() {
             <Reveal key={publico.slug} atraso={index * MOTION.stagger} aguardarAbertura>
               <PainelTrilha
                 publico={publico}
-                categorias={getCategorias(publico.slug).map((categoria) => categoria.titulo)}
+                categorias={getCategorias(publico.slug).map((categoria) => ({ rotuloCurto: categoria.rotuloCurto }))}
               />
             </Reveal>
           ))}

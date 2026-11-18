@@ -13,6 +13,7 @@ export type Publico = {
   slug: PublicoSlug
   trilha: '01' | '02'
   rotuloCurto: string
+  rotuloBreadcrumb: string
   titulo: string
   chamada: string
   descricao: string
@@ -24,6 +25,7 @@ export type Categoria = {
   slug: string
   publico: PublicoSlug
   ordem: string
+  rotuloCurto: string
   titulo: string
   resumo: string
   explicacao: string
@@ -51,6 +53,7 @@ export const publicos: Publico[] = [
     slug: 'fisioterapeutas',
     trilha: '01',
     rotuloCurto: 'Sou fisioterapeuta',
+    rotuloBreadcrumb: 'Fisioterapeutas',
     titulo: 'Fisioterapeutas',
     chamada: 'O que você quer aprender?',
     descricao:
@@ -58,7 +61,7 @@ export const publicos: Publico[] = [
     imagem: {
       src: fisioterapeutasFoto,
       alt: 'Fisioterapeuta orienta uma paciente durante uma avaliação funcional na clínica.',
-      posicao: '50% 38%',
+      posicao: '50% 25%',
       zoom: 1.04,
     },
     pilares: ['Raciocínio clínico', 'Avaliação', 'Recursos terapêuticos', 'Materiais de apoio'],
@@ -67,6 +70,7 @@ export const publicos: Publico[] = [
     slug: 'pacientes',
     trilha: '02',
     rotuloCurto: 'Sou paciente ou cuidador',
+    rotuloBreadcrumb: 'Pacientes',
     titulo: 'Pacientes e cuidadores',
     chamada: 'O que você está buscando?',
     descricao:
@@ -74,7 +78,7 @@ export const publicos: Publico[] = [
     imagem: {
       src: pacientesFoto,
       alt: 'Paciente pratica um alongamento sentada em casa, acompanhada por uma fisioterapeuta.',
-      posicao: '50% 44%',
+      posicao: '50% 30%',
       zoom: 1.04,
     },
     pilares: ['Entender a dor', 'Movimento seguro', 'Autocuidado', 'Cuidado de quem cuida'],
@@ -87,6 +91,7 @@ export const categorias: Categoria[] = [
     publico: 'fisioterapeutas',
     ordem: '01',
     titulo: 'Teórica e clínica',
+    rotuloCurto: 'Teórica',
     resumo: 'Anatomia funcional, biomecânica e condições neurológicas e musculoesqueléticas.',
     explicacao:
       'Aulas para construir a base do raciocínio clínico: como o corpo se move, o que muda nas condições neurológicas e musculoesqueléticas e como isso orienta a conduta.',
@@ -99,6 +104,7 @@ export const categorias: Categoria[] = [
     publico: 'fisioterapeutas',
     ordem: '02',
     titulo: 'Equipamentos e recursos',
+    rotuloCurto: 'Equipamentos',
     resumo: 'Parâmetros e configurações de TENS, ultrassom, laser e outros recursos.',
     explicacao:
       'Passo a passo de como configurar cada aparelho e, principalmente, por que escolher cada parâmetro, com raciocínio clínico por trás.',
@@ -111,6 +117,7 @@ export const categorias: Categoria[] = [
     publico: 'fisioterapeutas',
     ordem: '03',
     titulo: 'Aulas práticas',
+    rotuloCurto: 'Práticas',
     resumo: 'Demonstrações de testes funcionais e técnicas de avaliação.',
     explicacao:
       'Vídeos mostrando a execução real: posicionamento, comandos ao paciente e interpretação do que observar.',
@@ -123,6 +130,7 @@ export const categorias: Categoria[] = [
     publico: 'fisioterapeutas',
     ordem: '04',
     titulo: 'Materiais profissionais',
+    rotuloCurto: 'Materiais',
     resumo: 'Fichas, checklists e modelos prontos para usar na prática.',
     explicacao:
       'Documentos prontos e editáveis: fichas de anamnese e avaliação, checklists e modelos de evolução e relatório para enviar a médicos e empresas.',
@@ -135,6 +143,7 @@ export const categorias: Categoria[] = [
     publico: 'pacientes',
     ordem: '01',
     titulo: 'Entenda sua dor',
+    rotuloCurto: 'Entenda sua dor',
     resumo: 'A região afetada explicada de forma visual e simples.',
     explicacao:
       'Anatomia sem complicação: como funciona a região, por que a dor aparece e quando é hora de interromper e procurar avaliação presencial.',
@@ -147,6 +156,7 @@ export const categorias: Categoria[] = [
     publico: 'pacientes',
     ordem: '02',
     titulo: 'Movimento e mobilidade',
+    rotuloCurto: 'Movimento',
     resumo: 'Exercícios guiados para fazer em casa, por queixa ou objetivo.',
     explicacao:
       'Vídeos e guias ilustrados com protocolos para dor lombar, fascite plantar, tendinite e rotina de home office, com prevenção no dia a dia.',
@@ -159,6 +169,7 @@ export const categorias: Categoria[] = [
     publico: 'pacientes',
     ordem: '03',
     titulo: 'Cuidando de quem você ama',
+    rotuloCurto: 'Cuidadores',
     resumo: 'Mobilidade, respiração e autocuidado para quem cuida de um idoso.',
     explicacao:
       'Orientações práticas para cuidadores familiares: exercícios de mobilidade, exercícios respiratórios e cuidados com você mesmo durante a rotina.',

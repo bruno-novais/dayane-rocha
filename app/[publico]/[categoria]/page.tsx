@@ -49,18 +49,18 @@ export default async function CursosPage({ params }: { params: Promise<{ publico
   const lista = getCursos(publicoSlug, categoriaSlug)
   if (!lista.length) notFound()
   const outrasCategorias = getCategorias(publico.slug).filter((item) => item.slug !== categoria.slug)
+  const rotuloTrilha = publico.slug === 'fisioterapeutas' ? site.ui.rotuloProfissional : site.ui.rotuloEmCasa
 
   return (
     <div className="courses-page" data-trilha={publico.slug}>
       <ScrollProgress publico={publico.slug} />
       <section className="page-heading container-site">
         <div className="page-heading-inner">
-          <span className="page-audience-label">{publico.slug === 'fisioterapeutas' ? site.ui.rotuloProfissional : site.ui.rotuloEmCasa}</span>
           <Breadcrumb items={[
-            { label: publico.titulo, href: `/${publico.slug}` },
+            { label: publico.rotuloBreadcrumb, href: `/${publico.slug}` },
             { label: categoria.titulo },
           ]} />
-          <span className="eyebrow glass">{site.ui.trilha} {publico.trilha}</span>
+          <span className="path-breadcrumb-chip glass">{`${site.ui.trilha} ${publico.trilha} · ${rotuloTrilha}`}</span>
           <RevealText
             as="h1"
             segmentos={[{ texto: categoria.titulo, classe: 'text-primary' }]}

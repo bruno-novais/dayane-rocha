@@ -48,14 +48,14 @@ export default async function PublicoPage({ params }: { params: Promise<{ public
   if (!publico) notFound()
 
   const lista = getCategorias(publico.slug)
+  const rotuloTrilha = publico.slug === 'fisioterapeutas' ? site.ui.rotuloProfissional : site.ui.rotuloEmCasa
 
   return (
     <div className="audience-page" data-trilha={publico.slug}>
       <section className="page-heading container-site">
         <div className="page-heading-inner">
-          <span className="page-audience-label">{publico.slug === 'fisioterapeutas' ? site.ui.rotuloProfissional : site.ui.rotuloEmCasa}</span>
-          <Breadcrumb items={[{ label: publico.titulo }]} />
-          <span className="eyebrow glass">{site.ui.trilha} {publico.trilha}</span>
+          <Breadcrumb items={[{ label: publico.rotuloBreadcrumb }]} />
+          <span className="path-breadcrumb-chip glass">{`${site.ui.trilha} ${publico.trilha} · ${rotuloTrilha}`}</span>
           <RevealText as="h1" segmentos={realcarUltimaPalavra(publico.chamada)} modo="letters" className="display-title" />
           <Reveal><p>{publico.descricao}</p></Reveal>
         </div>
