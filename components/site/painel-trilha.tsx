@@ -9,34 +9,34 @@ type PainelTrilhaProps = { publico: Publico; categorias: string[] }
 export function PainelTrilha({ publico, categorias }: PainelTrilhaProps) {
   const Icone = publico.slug === 'fisioterapeutas' ? Brain : UserRound
   const rotulo = publico.slug === 'fisioterapeutas' ? site.ui.rotuloProfissional : site.ui.rotuloEmCasa
+  const exibeResumo = categorias.length > 4
+  const categoriasVisiveis = exibeResumo ? categorias.slice(0, 3) : categorias
 
   return (
     <Link className="pathway-panel glass group" data-trilha={publico.slug} href={`/${publico.slug}`}>
       <div className="pathway-photo">
         <PhotoFrame
           imagem={publico.imagem}
-          Icone={Icone}
           className="pathway-photo-image"
-          sizes="(max-width: 639px) 360px, (max-width: 900px) 50vw, 610px"
+          sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 900px) calc(50vw - 40px), 560px"
           priority
         />
-        <span className="pathway-photo-label glass">{site.ui.trilha} {publico.trilha}</span>
-        <span className="pathway-context-label glass-salmao">{rotulo}</span>
+        <span className="pathway-context-label glass">{rotulo}</span>
       </div>
       <span className="pathway-icon" aria-hidden="true"><Icone size={25} strokeWidth={1.75} /></span>
       <div className="pathway-content">
         <h2>{publico.rotuloCurto}</h2>
         <p>{publico.descricao}</p>
-        <span className="pathway-pills" aria-label={categorias.join(', ')}>
-          {categorias.map((categoria) => <span key={categoria}>{categoria}</span>)}
-        </span>
-        <span className="pathway-count-mobile">{categorias.length} categorias</span>
-        <span className="pathway-footer">
-          <span>{site.ui.verCategorias}</span>
+        <div className="pathway-footer">
+          <div className="pathway-pills" role="list" aria-label={`Categorias de ${publico.titulo}`}>
+            {categoriasVisiveis.map((categoria) => <span role="listitem" key={categoria}>{categoria}</span>)}
+            {exibeResumo && <span role="listitem">+{categorias.length - 3}</span>}
+          </div>
+          <span className="sr-only">Ver categorias de {publico.titulo}</span>
           <span className="round-link" aria-hidden="true">
             <ArrowUpRight size={21} strokeWidth={1.75} />
           </span>
-        </span>
+        </div>
       </div>
     </Link>
   )

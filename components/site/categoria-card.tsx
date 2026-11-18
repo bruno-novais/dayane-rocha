@@ -23,7 +23,7 @@ export function CategoriaCard({ categoria, indice = 0 }: { categoria: Categoria;
   const cursos = getCursos(categoria.publico, categoria.slug)
   const ativos = cursos.filter((curso) => curso.status === 'ativo').length
   const quantidade = ativos > 0
-    ? `${ativos} ${ativos === 1 ? site.ui.cursoSingular : site.ui.cursoPlural} ${ativos === 1 ? site.ui.cursoDisponivel : site.ui.cursosDisponiveis}`
+    ? `${ativos} ${ativos === 1 ? site.ui.cursoSingular : site.ui.cursoPlural}`
     : site.ui.emBreve
 
   return (
@@ -32,9 +32,8 @@ export function CategoriaCard({ categoria, indice = 0 }: { categoria: Categoria;
         <div className="category-photo">
           <PhotoFrame
             imagem={categoria.imagem}
-            Icone={Icone}
             className="category-photo-image"
-            sizes="(max-width: 639px) 360px, (max-width: 900px) 50vw, 610px"
+            sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) calc(50vw - 40px), 520px"
           />
           <div className="category-photo-meta">
             <span className="category-order glass">{categoria.ordem}</span>
@@ -44,17 +43,17 @@ export function CategoriaCard({ categoria, indice = 0 }: { categoria: Categoria;
         <span className="category-icon" aria-hidden="true">
           <Icone size={24} strokeWidth={1.75} />
         </span>
-        <div className="category-card-body">
-          <Link className="category-title-link" href={`/${categoria.publico}/${categoria.slug}`}>
+        <Link className="category-title-link" href={`/${categoria.publico}/${categoria.slug}`}>
+          <div className="category-card-body">
             <h2>{categoria.titulo}</h2>
             <span className="sr-only">{site.ui.acessarCategoria}</span>
-          </Link>
-          <p>{categoria.resumo}</p>
-          <div className="category-footer">
-            <span className="category-count">{quantidade}</span>
-            <span className="category-arrow" aria-hidden="true"><ArrowUpRight size={19} strokeWidth={1.75} /></span>
+            <p>{categoria.resumo}</p>
+            <div className="category-footer">
+              <span className="category-count">{quantidade}</span>
+              <span className="category-arrow" aria-hidden="true"><ArrowUpRight size={21} strokeWidth={1.75} /></span>
+            </div>
           </div>
-        </div>
+        </Link>
       </article>
     </Reveal>
   )

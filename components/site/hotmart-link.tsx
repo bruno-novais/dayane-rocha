@@ -3,8 +3,19 @@
 import type { MouseEventHandler, ReactNode } from 'react'
 import { track } from '@vercel/analytics'
 import { ExternalLink } from 'lucide-react'
-import { isHotmartUrlValida, type Curso } from '@/data/catalogo'
-import { site } from '@/data/site'
+import type { Curso } from '@/data/catalogo'
+import { MODO_DEMO, site } from '@/data/site'
+
+function isHotmartUrlValida(url: string): boolean {
+  if (!url.trim() || url.toUpperCase().includes('SUBSTITUIR')) return false
+
+  try {
+    const parsed = new URL(url)
+    return parsed.protocol === 'https:' && parsed.hostname === 'pay.hotmart.com'
+  } catch {
+    return false
+  }
+}
 
 type HotmartLinkProps = {
   curso: Curso
@@ -14,6 +25,16 @@ type HotmartLinkProps = {
 }
 
 export function HotmartLink({ curso, className, children, mostrarIcone = false }: HotmartLinkProps) {
+  if (MODO_DEMO) {
+    const onClick: MouseEventHandler<HTMLAnchorElement> = (event) => event.preventDefault()
+
+    return (
+      <a className={className} href="#" onClick={onClick} aria-label={`${curso.titulo}, ${site.ui.linkDemonstracao}`}>
+        {children}
+      </a>
+    )
+  }
+
   if (!isHotmartUrlValida(curso.hotmartUrl)) return <>{children}</>
 
   let href = curso.hotmartUrl

@@ -1,19 +1,13 @@
-'use client'
-
 import Image from 'next/image'
-import { useState } from 'react'
+import type { ImagemTrilha } from '@/data/catalogo'
 
 type PhotoImageProps = {
-  imagem: { src: string; alt: string }
+  imagem: ImagemTrilha
   sizes: string
   priority: boolean
 }
 
 export function PhotoImage({ imagem, sizes, priority }: PhotoImageProps) {
-  const [falhou, setFalhou] = useState(false)
-
-  if (falhou) return null
-
   return (
     <Image
       className="photo-frame-image"
@@ -22,7 +16,8 @@ export function PhotoImage({ imagem, sizes, priority }: PhotoImageProps) {
       fill
       sizes={sizes}
       priority={priority}
-      onError={() => setFalhou(true)}
+      placeholder="blur"
+      style={{ objectPosition: imagem.posicao, transform: `scale(${imagem.zoom ?? 1})` }}
     />
   )
 }
