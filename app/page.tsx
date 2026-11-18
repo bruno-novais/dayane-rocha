@@ -6,8 +6,9 @@ import { site } from '@/data/site'
 import { RevealText } from '@/components/motion/reveal-text'
 import { Reveal } from '@/components/motion/reveal'
 import { ScrollProgress } from '@/components/motion/scroll-progress'
-import { SimboloFundo } from '@/components/motion/simbolo-fundo'
 import { LineReveal } from '@/components/motion/line-reveal'
+import { TexturaFundo } from '@/components/site/textura-fundo'
+import { AvisoSaude } from '@/components/site/aviso-saude'
 import { PainelTrilha } from '@/components/site/painel-trilha'
 import { MOTION } from '@/lib/motion'
 
@@ -15,11 +16,21 @@ export default function HomePage() {
   return (
     <>
       <ScrollProgress />
-      <section className="hero-section container-site">
-        <SimboloFundo />
-        <div className="hero-copy">
+      <section className="hero-section">
+        <Image
+          className="hero-brand-symbol"
+          src="/brand/logo-simbolo.svg"
+          alt=""
+          width={420}
+          height={392}
+          priority
+          unoptimized
+          aria-hidden="true"
+        />
+        <TexturaFundo variante="hero" />
+        <div className="container-site hero-copy">
           <Reveal>
-            <span className="eyebrow glass">{site.inicio.eyebrow}</span>
+            <span className="eyebrow glass hero-eyebrow">{site.inicio.eyebrow}</span>
           </Reveal>
           <RevealText as="h1" segmentos={site.inicio.titulo} modo="letters" className="display-title" aguardarAbertura />
           <RevealText
@@ -33,7 +44,6 @@ export default function HomePage() {
       </section>
 
       <section className="pathways-section container-site" aria-label={site.ui.escolhaTrilha}>
-        <SimboloFundo secundario />
         <div className="pathways-grid">
           {publicos.map((publico, index) => (
             <Reveal key={publico.slug} atraso={index * MOTION.stagger} aguardarAbertura>
@@ -44,10 +54,12 @@ export default function HomePage() {
             </Reveal>
           ))}
         </div>
+        <div className="pathways-note">
+          <AvisoSaude compacto />
+        </div>
       </section>
 
       <section className="process-section">
-        <SimboloFundo secundario />
         <div className="container-site">
           <div className="process-heading">
             <RevealText as="h2" segmentos={[{ texto: site.inicio.comoFuncionaTitulo }]} modo="words" className="section-title" />
@@ -65,7 +77,7 @@ export default function HomePage() {
       </section>
 
       <section className="about-preview">
-        <SimboloFundo secundario />
+        <TexturaFundo variante="sobre" />
         <div className="container-site about-preview-grid">
           <div>
             <Reveal>

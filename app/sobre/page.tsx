@@ -5,19 +5,28 @@ import { ArrowUpRight } from 'lucide-react'
 import { site } from '@/data/site'
 import { RevealText } from '@/components/motion/reveal-text'
 import { Reveal } from '@/components/motion/reveal'
-import { SimboloFundo } from '@/components/motion/simbolo-fundo'
+import { TexturaFundo } from '@/components/site/textura-fundo'
 
 export const metadata: Metadata = {
   title: 'Sobre',
   description: site.sobre.apresentacao,
   alternates: { canonical: '/sobre' },
-  openGraph: { title: `${site.nome} · Sobre`, description: site.sobre.apresentacao },
+  openGraph: {
+    title: `${site.nome} · Sobre`,
+    description: site.sobre.apresentacao,
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: site.introducao.acessivel }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${site.nome} · Sobre`,
+    description: site.sobre.apresentacao,
+    images: ['/opengraph-image'],
+  },
 }
 
 export default function SobrePage() {
   return (
     <div className="about-page">
-      <SimboloFundo />
       <section className="container-site about-intro">
         <span className="eyebrow glass">{site.inicio.sobreEyebrow}</span>
         <RevealText
@@ -36,7 +45,8 @@ export default function SobrePage() {
       </section>
 
       <section className="values-section">
-        <div className="container-site">
+        <TexturaFundo variante="sobre" />
+        <div className="container-site values-content">
           <RevealText as="h2" segmentos={[{ texto: site.sobre.valoresTitulo }]} modo="words" className="section-title" />
           <div className="values-list">
             {site.sobre.valores.map((valor, index) => (

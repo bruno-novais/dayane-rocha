@@ -6,6 +6,7 @@ import { IntroProvider } from '@/components/site/intro-provider'
 import { MotionProvider } from '@/components/motion/motion-provider'
 import { SiteFooter } from '@/components/site/site-footer'
 import { SiteHeader } from '@/components/site/site-header'
+import { TexturaFundo } from '@/components/site/textura-fundo'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -23,6 +24,13 @@ export const metadata: Metadata = {
     siteName: site.nome,
     locale: 'pt_BR',
     type: 'website',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: site.introducao.acessivel }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${site.nome} · ${site.titulo}`,
+    description: site.descricao,
+    images: ['/opengraph-image'],
   },
   icons: {
     icon: '/icon.png',
@@ -45,6 +53,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script dangerouslySetInnerHTML={{ __html: introScript }} />
       </head>
       <body>
+        <TexturaFundo />
         <noscript>
           <style>{`.reveal-text-unit,.reveal-block,.intro-overlay{opacity:1!important;filter:none!important;transform:none!important}.intro-overlay{display:none!important}`}</style>
         </noscript>

@@ -5,7 +5,6 @@ import { site } from '@/data/site'
 import { Breadcrumb } from '@/components/site/breadcrumb'
 import { CursosGrid } from '@/components/site/cursos-grid'
 import { AvisoSaude } from '@/components/site/aviso-saude'
-import { SimboloFundo } from '@/components/motion/simbolo-fundo'
 import { RevealText } from '@/components/motion/reveal-text'
 import { Reveal } from '@/components/motion/reveal'
 import { ScrollProgress } from '@/components/motion/scroll-progress'
@@ -26,7 +25,17 @@ export async function generateMetadata({ params }: { params: Promise<{ publico: 
     title: `${currentCategoria.titulo} · ${currentPublico.titulo}`,
     description: currentCategoria.resumo,
     alternates: { canonical: `/${publico}/${categoria}` },
-    openGraph: { title: currentCategoria.titulo, description: currentCategoria.resumo },
+    openGraph: {
+      title: currentCategoria.titulo,
+      description: currentCategoria.resumo,
+      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: site.introducao.acessivel }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: currentCategoria.titulo,
+      description: currentCategoria.resumo,
+      images: ['/opengraph-image'],
+    },
   }
 }
 
@@ -40,11 +49,11 @@ export default async function CursosPage({ params }: { params: Promise<{ publico
   if (!lista.length) notFound()
 
   return (
-    <div className="courses-page">
-      <ScrollProgress />
+    <div className="courses-page" data-trilha={publico.slug}>
+      <ScrollProgress publico={publico.slug} />
       <section className="page-heading container-site">
-        <SimboloFundo />
         <div className="page-heading-inner">
+          <span className="page-audience-label">{publico.slug === 'fisioterapeutas' ? site.ui.rotuloProfissional : site.ui.rotuloEmCasa}</span>
           <Breadcrumb items={[
             { label: publico.titulo, href: `/${publico.slug}` },
             { label: categoria.titulo },
