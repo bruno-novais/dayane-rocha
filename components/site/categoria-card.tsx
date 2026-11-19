@@ -16,36 +16,39 @@ export function CategoriaCard({ categoria, indice = 0 }: { categoria: Categoria;
 
   return (
     <Reveal atraso={indice * 0.08} className="category-reveal">
-      <article className="category-card" data-trilha={categoria.publico} data-card-observe>
-        <div className="category-photo">
-          <PhotoFrame
-            imagem={categoria.imagem}
-            className="category-photo-image"
-            sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) calc(50vw - 40px), 520px"
-          />
-        </div>
-        <span className="card-glass-blur" aria-hidden="true" />
-        <span className="card-glass-shade" aria-hidden="true" />
-        <span className="card-glass-tint" aria-hidden="true" />
+      <article className="category-card-shell" data-trilha={categoria.publico}>
+        <Link
+          className="category-card"
+          href={`/${categoria.publico}/${categoria.slug}`}
+          aria-label={`${site.ui.acessarCategoria}: ${categoria.titulo}`}
+          data-trilha={categoria.publico}
+          data-card-observe
+        >
+          <div className="category-photo">
+            <PhotoFrame
+              imagem={categoria.imagem}
+              className="category-photo-image"
+              sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) calc(50vw - 40px), 520px"
+            />
+          </div>
+          <span className="card-glass-blur" aria-hidden="true" />
+          <span className="card-glass-shade" aria-hidden="true" />
+          <span className="card-glass-tint" aria-hidden="true" />
+          <div className="category-card-body">
+            <h3>{categoria.titulo}</h3>
+            <p>{categoria.resumo}</p>
+            <div className="category-footer">
+              <span className="category-count glass">{quantidade}</span>
+              <span className="card-wide-button" aria-hidden="true">
+                <span>Ver cursos</span>
+                <ArrowUpRight size={20} strokeWidth={1.8} />
+              </span>
+            </div>
+          </div>
+        </Link>
         <div className="category-photo-meta">
           <span className="category-order glass" aria-hidden="true">{categoria.ordem}</span>
           <InfoCategoria categoria={categoria} />
-        </div>
-        <div className="category-card-body">
-          <h3>
-            <Link className="category-title-link" href={`/${categoria.publico}/${categoria.slug}`}>
-              {categoria.titulo}
-              <span className="sr-only"> — {site.ui.acessarCategoria}</span>
-            </Link>
-          </h3>
-          <p>{categoria.resumo}</p>
-          <div className="category-footer">
-            <span className="category-count glass">{quantidade}</span>
-            <span className="card-wide-button" aria-hidden="true">
-              <span>Ver cursos</span>
-              <ArrowUpRight size={20} strokeWidth={1.8} />
-            </span>
-          </div>
         </div>
       </article>
     </Reveal>

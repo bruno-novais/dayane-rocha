@@ -13,7 +13,13 @@ export function PainelTrilha({ publico, categorias }: PainelTrilhaProps) {
   const categoriasVisiveis = exibeResumo ? categorias.slice(0, 3) : categorias
 
   return (
-    <article className="pathway-panel" data-trilha={publico.slug} data-card-observe>
+    <Link
+      className="pathway-panel"
+      href={`/${publico.slug}`}
+      aria-label={`Entrar na trilha: ${publico.titulo}`}
+      data-trilha={publico.slug}
+      data-card-observe
+    >
       <div className="pathway-photo">
         <PhotoFrame
           imagem={publico.imagem}
@@ -26,14 +32,10 @@ export function PainelTrilha({ publico, categorias }: PainelTrilhaProps) {
       <span className="card-glass-shade" aria-hidden="true" />
       <span className="card-glass-tint" aria-hidden="true" />
       <span className="pathway-context-label glass" aria-hidden="true">{rotulo}</span>
-      <span className="pathway-icon glass" aria-hidden="true"><Icone size={22} strokeWidth={1.75} /></span>
+      <span className="pathway-icon glass" aria-hidden="true"><Icone size={20} strokeWidth={1.75} /></span>
       <div className="pathway-content">
         <div className="pathway-heading-row">
-          <h2>
-            <Link className="pathway-title-link" href={`/${publico.slug}`} aria-label={`Entrar na trilha: ${publico.titulo}`}>
-              {publico.rotuloCurto}
-            </Link>
-          </h2>
+          <h2>{publico.rotuloCurto}</h2>
           <span className="pathway-count-badge glass">{categorias.length} categorias</span>
         </div>
         <p>{publico.descricao}</p>
@@ -46,6 +48,6 @@ export function PainelTrilha({ publico, categorias }: PainelTrilhaProps) {
           <ArrowUpRight size={20} strokeWidth={1.8} />
         </span>
       </div>
-    </article>
+    </Link>
   )
 }
