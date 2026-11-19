@@ -26,7 +26,7 @@ export const site = {
     { rotulo: 'Sobre', href: '/sobre' },
   ],
   inicio: {
-    eyebrow: 'Cursos online de fisioterapia',
+    eyebrow: 'Plataforma de fisioterapia',
     titulo: [
       { texto: 'Quem é ' },
       { texto: 'você?', classe: 'text-primary' },
