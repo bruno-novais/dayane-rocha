@@ -6,6 +6,7 @@ import { IntroProvider } from '@/components/site/intro-provider'
 import { MotionProvider } from '@/components/motion/motion-provider'
 import { SiteFooter } from '@/components/site/site-footer'
 import { SiteHeader } from '@/components/site/site-header'
+import { CardScrollObserver } from '@/components/site/card-scroll-observer'
 import { TexturaFundo } from '@/components/site/textura-fundo'
 import './globals.css'
 
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <IntroProvider>
             <a className="skip-link" href="#conteudo">{site.ui.pularConteudo}</a>
             <SiteHeader />
+            <CardScrollObserver />
             <main id="conteudo" className="site-main" tabIndex={-1}>
               {children}
             </main>
