@@ -46,10 +46,6 @@ html {
   scroll-padding-top: 104px;
 }
 
-html[data-intro='play'] {
-  overflow: hidden;
-}
-
 body {
   min-width: 320px;
   margin: 0;
@@ -60,6 +56,44 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+body.splash-active {
+  overflow: hidden;
+}
+
+.splash-screen {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #141414;
+}
+
+.splash-screen.is-leaving {
+  pointer-events: none;
+}
+
+.splash-screen__identity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.splash-screen__mark {
+  display: block;
+  width: 112px;
+  aspect-ratio: 1868 / 1740;
+}
+
+@media (max-width: 639px) {
+  .splash-screen__mark {
+    width: 96px;
+  }
 }
 
 button,
@@ -370,151 +404,6 @@ button {
   text-align: center;
   white-space: nowrap;
   user-select: none;
-}
-
-.intro-overlay {
-  position: fixed;
-  z-index: 100;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: var(--background);
-  color: var(--foreground);
-  opacity: 0;
-  pointer-events: none;
-}
-
-html[data-intro='play'] .intro-overlay {
-  display: flex;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.intro-overlay.is-leaving {
-  animation: intro-fade-out 300ms ease 800ms both;
-}
-
-.intro-overlay.is-leaving .intro-name span {
-  animation: intro-letter-out 400ms var(--ease-out-expo) calc(var(--intro-index) * 40ms) both;
-}
-
-.intro-overlay.is-leaving .intro-tagline span {
-  animation: intro-letter-out 280ms var(--ease-out-expo) 200ms both;
-}
-
-.intro-overlay.is-leaving .intro-symbol {
-  animation: intro-symbol-out 350ms var(--ease-out-expo) 420ms both;
-}
-
-.intro-overlay.is-skipping {
-  animation: intro-fade-out 400ms ease both;
-}
-
-.intro-overlay.is-skipping .intro-name span,
-.intro-overlay.is-skipping .intro-tagline span,
-.intro-overlay.is-skipping .intro-symbol {
-  animation: intro-fade-out 180ms ease both;
-}
-
-@keyframes intro-symbol-out {
-  to { opacity: 0; filter: blur(16px); transform: scale(0.96); }
-}
-
-.intro-center {
-  display: flex;
-  width: min(100% - 32px, 1000px);
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  text-align: center;
-}
-
-.intro-symbol {
-  width: 128px;
-  height: auto;
-  object-fit: contain;
-  opacity: 0;
-  animation: intro-symbol-in 800ms var(--ease-out-expo) 200ms forwards;
-}
-
-.intro-name {
-  margin: 0;
-  font-size: clamp(2.5rem, 9vw, 6rem);
-  font-weight: 800;
-  letter-spacing: -0.055em;
-  line-height: 1;
-}
-
-.intro-name span,
-.intro-tagline span {
-  display: inline-block;
-  opacity: 0;
-  filter: blur(14px);
-  transform: translateY(8px);
-  animation: intro-letter-in 600ms var(--ease-out-expo) forwards;
-}
-
-.intro-tagline {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0 0.28em;
-  margin: 0;
-  color: var(--foreground);
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
-}
-
-.intro-tagline span {
-  animation-delay: 1.5s;
-}
-
-.intro-skip {
-  position: absolute;
-  right: 24px;
-  bottom: 28px;
-  min-height: 44px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  color: var(--foreground);
-  font-size: 14px;
-  opacity: 0;
-  animation: intro-letter-in 300ms ease 500ms forwards;
-}
-
-.intro-progress {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 2px;
-  background: var(--primary);
-  transform: scaleX(0);
-  transform-origin: left center;
-  animation: intro-progress 3.6s linear forwards;
-}
-
-@keyframes intro-symbol-in {
-  from { opacity: 0; filter: blur(18px); transform: scale(0.94); }
-  to { opacity: 1; filter: blur(0); transform: scale(1); }
-}
-
-@keyframes intro-letter-in {
-  from { opacity: 0; filter: blur(14px); transform: translateY(8px); }
-  to { opacity: 1; filter: blur(0); transform: translateY(0); }
-}
-
-@keyframes intro-letter-out {
-  to { opacity: 0; filter: blur(16px); transform: translateY(-6px); }
-}
-
-@keyframes intro-fade-out {
-  to { opacity: 0; }
-}
-
-@keyframes intro-progress {
-  to { transform: scaleX(1); }
 }
 
 .hero-section {
@@ -1737,20 +1626,6 @@ html[data-intro='play'] .intro-overlay {
     padding: 18px;
   }
 
-  .intro-symbol {
-    width: 96px;
-    height: auto;
-  }
-
-  .intro-center {
-    gap: 16px;
-  }
-
-  .intro-skip {
-    right: 16px;
-    bottom: 18px;
-  }
-
   .value-row {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -1770,9 +1645,6 @@ html[data-intro='play'] .intro-overlay {
     width: calc(100% - 28px);
   }
 
-  .intro-name {
-    font-size: clamp(2.35rem, 11vw, 3rem);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1787,8 +1659,10 @@ html[data-intro='play'] .intro-overlay {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro-overlay {
-    display: none !important;
+  .splash-screen:not(.is-leaving) .splash-item {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
   }
 }
 
@@ -1936,67 +1810,12 @@ body {
   white-space: nowrap;
 }
 
-html[data-intro='play']::before {
-  position: fixed;
-  z-index: 99;
-  inset: 0;
-  pointer-events: none;
-  background: var(--background);
-  content: '';
-}
-
-.intro-overlay,
-html[data-intro='play'] .intro-overlay {
-  position: fixed;
-  inset: 0;
-  display: grid;
-  width: 100%;
-  height: 100dvh;
-  place-items: center;
-  text-align: center;
-}
-
-.intro-center {
-  display: flex;
-  width: min(calc(100% - 32px), 1000px);
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  text-align: center;
-}
-
-.intro-name {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0 0.22em;
-  font-size: clamp(2.5rem, 9vw, 6rem);
-  text-wrap: balance;
-}
-
-.intro-name-line {
-  display: inline-block;
-  white-space: nowrap;
-}
-
-.intro-tagline {
-  text-wrap: balance;
-}
-
-.intro-progress,
 .route-progress {
   position: fixed;
   left: 0;
   width: 100%;
   height: 2px;
   transform-origin: left center;
-}
-
-.intro-progress {
-  right: auto;
-  bottom: 0;
-  z-index: 101;
-  background: var(--accent);
 }
 
 .route-progress {
@@ -2678,17 +2497,6 @@ html[data-intro='play'] .intro-overlay {
   .pathway-count-mobile {
     display: block;
   }
-
-  .intro-name {
-    flex-direction: column;
-    gap: 0;
-    font-size: clamp(2.5rem, 13vw, 6rem);
-    line-height: 1;
-  }
-
-  .intro-name-line {
-    display: block;
-  }
 }
 
 @media (max-width: 390px) {
@@ -2699,10 +2507,6 @@ html[data-intro='play'] .intro-overlay {
   .site-header {
     right: 12px;
     left: 12px;
-  }
-
-  .intro-center {
-    width: calc(100% - 32px);
   }
 
   .pathway-context-label,
