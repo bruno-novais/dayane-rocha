@@ -3,6 +3,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { brandFont } from '@/lib/fonts'
 import { site } from '@/data/site'
 import { IntroProvider } from '@/components/site/intro-provider'
+import { SplashScreen } from '@/components/site/splash-screen'
 import { MotionProvider } from '@/components/motion/motion-provider'
 import { SiteFooter } from '@/components/site/site-footer'
 import { SiteHeader } from '@/components/site/site-header'
@@ -45,21 +46,17 @@ export const viewport: Viewport = {
   themeColor: '#1E1E1E',
 }
 
-const introScript = `(function(){try{var p=window.location.pathname;var s=sessionStorage.getItem('dr-intro-visto');var r=window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(p==='/'&&!s&&!r){document.documentElement.dataset.intro='play'}else{sessionStorage.setItem('dr-intro-visto','1')}}catch(e){}})()`
-
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className={brandFont.variable} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: introScript }} />
-      </head>
-      <body>
+    <html lang="pt-BR" className={brandFont.variable}>
+      <body className="splash-active">
         <TexturaFundo />
         <noscript>
-          <style>{`.reveal-text-unit,.reveal-block,.intro-overlay{opacity:1!important;filter:none!important;transform:none!important}.intro-overlay{display:none!important}`}</style>
+          <style>{`.splash-screen{display:none!important}`}</style>
         </noscript>
         <MotionProvider>
           <IntroProvider>
+            <SplashScreen />
             <a className="skip-link" href="#conteudo">{site.ui.pularConteudo}</a>
             <SiteHeader />
             <CardScrollObserver />
